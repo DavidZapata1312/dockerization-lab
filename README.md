@@ -32,7 +32,7 @@ To explore a topic:
 
 ```bash
 # Clone this repository
-git clone https://github.com/<your-username>/dockerization-lab.git
+git clone https://github.com/DavidZapata1312/dockerization-lab.git
 cd dockerization-lab
 ```
 # Switch to the lesson branch
