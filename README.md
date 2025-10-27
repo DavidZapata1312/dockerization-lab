@@ -1,63 +1,125 @@
-# 🐳 Dockerization Lab
+# 🐳 02 — Docker Compose Basics
 
-**Dockerization Lab** is an educational repository designed to teach you how to containerize your applications using **Docker** and **Docker Compose**, step by step.  
-It starts with the fundamentals, introduces Docker Compose, and then applies everything to a real-world **NestJS + PostgreSQL** project.
-
----
-
-## 🎯 Objectives
-
-- Understand what Docker is and how it works  
-- Learn about images, containers, volumes, and networks  
-- Use Docker Compose to manage multi-container applications  
-- Apply Dockerization principles to a NestJS backend project  
-- Build a reusable structure for future apps  
+Welcome to the second part of the **Dockerization Lab**.  
+Here we will dockerize the **Sportline API** completely using a `docker-compose.yml` file that orchestrates the API and PostgreSQL.
 
 ---
 
-## 📂 Repository Structure
+## 🎯 Goal
 
-| Section | Description | Branch |
-|----------|--------------|---------|
-| **01 - Introduction to Docker** | Learn Docker fundamentals and build your first “Hello Docker” container | [`01-introduction-to-docker`](../../tree/01-introduction-to-docker) |
-| **02 - Docker Compose Basics** | Learn how to orchestrate multiple containers and link them together (based on *Sportline*) | [`02-docker-compose-basics`](../../tree/02-docker-compose-basics) |
-| **03 - NestJS Dockerization** | Full example: Dockerizing a NestJS + PostgreSQL application | `coming soon` |
+By the end of this module you will:
+
+- Understand how a `docker-compose.yml` file structures multiple services.  
+- Launch the full Sportline stack (API + PostgreSQL) with a single command.  
+- Learn about environment variables, volumes, networks, and dependencies in Docker.  
+- Connect concepts from Part 01 (images, containers, Dockerfile) to a real project.
 
 ---
 
-## 🧭 How to Use This Lab
+## 📂 Sportline Project Context
 
-Each topic is developed in its own branch.  
-To explore a topic:
+The Sportline repo includes:
+
+- `Dockerfile` → builds the API image (TypeScript + Node.js + Express + Sequelize).  
+- `docker-compose.yml` → defines two services: `app` (API) and `db` (PostgreSQL).  
+- `.env.example` → environment variables for Docker.  
+- Stack includes Node.js, Express, TypeScript, Sequelize (PostgreSQL), and JWT authentication.
+
+---
+
+## 🧩 Docker Compose File Overview
+
+```yaml
+
+🔹 Line-by-Line Breakdown 
+version: '3.8' → Compose file version.
+
+services: → defines containers to run.
+
+App service:
+
+build: . → builds image from Dockerfile.
+
+container_name → friendly container name.
+
+ports → map host 4000 to container 4000.
+
+depends_on → ensures DB is healthy before starting.
+
+networks → connects containers internally.
+
+environment → config for app & DB connection + JWT secrets + seeder flag.
+
+restart → automatic restart policy.
+
+deploy.resources.limits → CPU/memory constraints.
+
+DB service:
+
+image: postgres:16 → official PostgreSQL image.
+
+container_name → friendly container name.
+
+restart → always restart on failure.
+
+environment → DB user/password/dbname.
+
+healthcheck → ensures DB is ready before app connects.
+
+ports → map DB to host for development.
+
+volumes → persist database data.
+
+deploy.resources.limits → CPU/memory constraints.
+
+Volumes & Networks:
+
+volumes: → defines persistent storage (pgdata).
+
+networks: → defines internal network (app-network).
+```
+##🚀 How to run
 
 ```bash
-# Clone this repository
-git clone https://github.com/<your-username>/dockerization-lab.git
-cd dockerization-lab
+docker compose up --build -d
 ```
-# Switch to the lesson branch
-git checkout 01-introduction-to-docker
-Each branch contains its own folder structure and README.md with explanations and examples.
 
-⚙️ Prerequisites
-Before you start, make sure you have installed:
+Builds the API image if needed.
 
-Docker
+Starts both containers (API + DB).
 
-Docker Compose
+Waits for DB to be healthy before launching API.
 
-Basic knowledge of the terminal
+Access API at: http://localhost:4000
+Swagger docs: http://localhost:4000/api/docs
 
-🚀 Next Steps
-Learn the basics → 01-introduction-to-docker
+Stop and remove containers:
 
-Orchestrate multiple services → 02-docker-compose-basics
+```bash
 
-Dockerize a real app (NestJS + PostgreSQL) → Coming soon 🚧
+docker compose down
+```
+## 🔧 Tips & Best Practices
 
-🧑‍🏫 About
-Created by David Zapata as a practical and educational guide for developers learning Docker step by step.
-Feel free to fork, adapt, and contribute!
+Change JWT secrets before production.
 
-“Learn once, run anywhere — that’s the power of Docker.”
+Use migrations instead of auto-sync in production.
 
+Only expose necessary ports.
+
+Mount volumes for DB and logs.
+
+Set resource limits to avoid hogging the host.
+
+## 🔮 Next Steps
+
+
+Next module will cover:
+
+Dev environment with hot-reload.
+
+Additional services (e.g., Redis).
+
+CI/CD pipelines with Docker.
+
+Production-ready Dockerfile with multistage builds and image optimization.
