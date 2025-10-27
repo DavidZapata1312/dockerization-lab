@@ -39,7 +39,7 @@ cd dockerization-lab
 git checkout 01-introduction-to-docker
 Each branch contains its own folder structure and README.md with explanations and examples.
 
-⚙️ Prerequisites
+## ⚙️ Prerequisites
 Before you start, make sure you have installed:
 
 Docker
@@ -48,14 +48,19 @@ Docker Compose
 
 Basic knowledge of the terminal
 
-🚀 Next Steps
+## 🚀 Next Steps
+
+---
+
 Learn the basics → 01-introduction-to-docker
 
 Orchestrate multiple services → 02-docker-compose-basics
 
 Dockerize a real app (NestJS + PostgreSQL) → Coming soon 🚧
 
-🧑‍🏫 About
+---
+
+## 🧑‍🏫 About
 Created by David Zapata as a practical and educational guide for developers learning Docker step by step.
 Feel free to fork, adapt, and contribute!
 
