@@ -100,7 +100,10 @@ Remove it:
 docker rm <container_id>
 ```
 🎓 Summary
+
 ✅ You built your first image
+
 ✅ You ran your first container
+
 ✅ You learned the core Docker concepts
 
