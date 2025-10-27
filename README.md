@@ -78,7 +78,7 @@ volumes: → defines persistent storage (pgdata).
 
 networks: → defines internal network (app-network).
 ```
-##🚀 How to run
+## 🚀 How to run
 
 ```bash
 docker compose up --build -d
